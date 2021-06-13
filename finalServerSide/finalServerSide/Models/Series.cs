@@ -50,6 +50,11 @@ namespace Ex2.Models
             SeriesDBServices dbs = new SeriesDBServices();
             dbs.Insert(this);
         }
+        public List<Series> Get()
+        {
+            SeriesDBServices us = new SeriesDBServices();
+            return us.GetSeries();
+        }
 
     }
 }

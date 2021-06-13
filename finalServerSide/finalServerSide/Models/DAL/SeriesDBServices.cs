@@ -203,5 +203,53 @@ namespace Ex2.Models.DAL
             return cmd;
         }
 
-      }
+
+        //GetSeries
+        public List<Series> GetSeries()
+        {
+            SqlConnection con = null;
+            SqlCommand cmd;
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+                List<Series> seriesList = new List<Series>();
+                String selectSTR = "SELECT * FROM Series_2021";//WHERE isAdmin=false
+                cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                while (dr.Read())
+                {
+                    Series u = new Series();
+                    u.Id = Convert.ToInt32(dr["id"]);
+                    u.First_air_date = (string)dr["first_air_date"];
+                    u.Name = (string)dr["name"];
+                    u.Origin_country = (string)dr["origin_country"];
+                    u.Original_language = (string)dr["original_language"];
+                    u.Overview = (string)dr["overview"];
+                    u.Popularity = Convert.ToInt32(dr["popularity"]);
+                    u.Poster_path = (string)(dr["poster_path"]);
+                    u.PreferencesCount = Convert.ToInt32(dr["preferencesCount"]);
+                    seriesList.Add(u);
+                }
+                return seriesList;
+            }
+
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+        }
+
+    }
 }

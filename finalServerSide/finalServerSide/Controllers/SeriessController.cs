@@ -11,10 +11,10 @@ namespace Ex2.Controllers
     public class SeriessController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET api/<controller>/5
         public string Get(int id)
@@ -36,6 +36,11 @@ namespace Ex2.Controllers
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
+        }
+        public List<Series> Get()
+        {
+            Series s = new Series();
+            return s.Get();
         }
     }
 }

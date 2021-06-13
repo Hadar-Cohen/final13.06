@@ -23,19 +23,34 @@
         var tbl; //DATA TABLE
         $(document).ready(function () {
             navBarVisability();
-            $("#showUsers").on("click", getUsers());
+           // $("#showUsers").on("click", getUsers());
+          //  $("#showSeries").on("click", getSeries());
+
             //buttonEvents();
         });
 
         function getUsers() {
+            location.reload();
             let api = "../api/Users";
-            ajaxCall("GET", api, "", getSuccessCB, error);
+            ajaxCall("GET", api, "", getUsersSuccessCB, error);
         }
-        function getSuccessCB(usersList) {
+        function getSeries() {
+            location.reload();
+            let api = "../api/Seriess";
+            ajaxCall("GET", api, "", getSeriesSuccessCB, error);
+        }
+
+        function getUsersSuccessCB(usersList) {
             if (!tbl)
-                createTable(usersList);
+                createUsersTable(usersList);
             else
                 redrawTable(tbl, usersList);
+        }
+        function getSeriesSuccessCB(usersList) {
+            if (!tbl)
+                createSeriesTable(usersList);
+            //else
+            //    redrawTable(tbl, usersList);
         }
         //wire all the buttons to their functions
         //   function buttonEvents() {
@@ -99,11 +114,14 @@
         }
         function deleteSuccess(numOfUser) {
             alert("Deleted " + numOfUser + " users")
+            getUsers();
         }
         function error(err) {
             console.log(err)
         }
-        function createTable(usersdata) {
+        function createUsersTable(usersdata) {
+            document.getElementById("seriesTableph").style.visibility = "hidden";
+            document.getElementById("ph").style.visibility = "visibility";
             console.log(usersdata);
             //orders = usersdata;
             $("#ph").append("<table id='usersTable' class='display nowrap' style='width: 100%'> </table>");
@@ -175,6 +193,76 @@
             }
         }
 
+        function createSeriesTable(seriesdata) {
+            document.getElementById("ph").style.visibility = "hidden";
+            document.getElementById("seriesTableph").style.visibility = "visibility";
+            console.log(seriesdata);
+            //orders = usersdata;
+            $("#seriesTableph").append("<table id='seriesTable' class='display nowrap' style='width: 100%'> </table>");
+            try {
+                tbl = $('#seriesTable').DataTable({
+                    data: seriesdata,
+                    pageLength: 5,
+                    columns: [
+                        //{
+                        //    render: function (data, type, row, meta) {
+                        //        let dataProd = "data-userId='" + row.Id + "'";
+                        //        viewBtn = "<button type='button' id='btnDataTable' class='view btn btn-success' " + dataProd + " > View </button>";
+                        //        //updateBtn = "<button type='button' class='update btn btn-success' " + dataProd + " > Update </button>";
+                        //        deleteBtn = "<button type='button' id='btnDataTable' class='delete btn btn-success' onclick='deleteFunc(this)' " + dataProd + " > Delete </button>";
+                        //        return viewBtn + deleteBtn;
+                        //    }
+                        //},
+                        {
+                            title: "Series Id:",
+                            data: "Id"
+                        },
+                        //{
+                        //    render: function (data, type, row1, meta1) {
+                        //        return "<img class='imgCard' src='" + episodes[i].ImageURL + "'>"
+                        //        }
+                        //        },
+                        {
+                            title: "Series Name",
+                            data: "Name"
+                        },
+                        {
+                            title: "Preferences",
+                            data: "PreferencesCount"
+                        },
+                        {
+                            title: "Popularity",
+                            data: "Popularity"
+                        },
+                        {
+                            title: "First air date",
+                            data: "First_air_date"
+
+                        },
+                        {
+                            title: "Origin country",
+                            data: "Origin_country"
+
+                        },
+                        {
+                            title: "Original language",
+                            data: "Original_language"
+
+                        },
+                        {
+                            title: "Overview",
+                            data: "Overview"
+
+                        }
+                    ],
+
+                })
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
         function redrawTable(tbl, data) {
             tbl.clear();
             for (var i = 0; i < data.length; i++) {
@@ -211,9 +299,11 @@
         </div>
     </nav>
 
-    <button id="showUsers">SHOW ALL USERS</button>
+    <button id="showUsers" onclick="getUsers();">SHOW ALL USERS</button>
+    <button id="showSeries" onclick="getSeries()">SHOW ALL Series</button>
 
     <div id="ph"></div>
-    
+    <div id="seriesTableph"></div>
+
 </body>
 </html>
