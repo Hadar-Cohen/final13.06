@@ -207,5 +207,60 @@ namespace Ex2.Models.DAL
                 }
             }
         }
+
+        public int Delete(int id)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildDeleteCommand(id);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        //--------------------------------------------------------------------
+        // Build the DELETE command String
+        //--------------------------------------------------------------------
+        private String BuildDeleteCommand(int id)
+        {
+            String command;
+            command = "DELETE FROM User_2021 where id =" + id;
+            return command;
+        }
+
+
+
     }
 }

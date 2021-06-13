@@ -65,5 +65,13 @@ namespace Ex2.Models
             UserDataServices us = new UserDataServices();
             return us.GetUsers();
         }
+        public int Delete(int id)
+        {
+            UserDataServices db = new UserDataServices();
+            return db.Delete(id);
+        }
+
+
+
     }
 }

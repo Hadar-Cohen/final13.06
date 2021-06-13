@@ -17,11 +17,14 @@
     <link href="myStyle.css" rel="stylesheet" />
     <script src="../Scripts/navbarFunc.js"></script>
     <link href="AdminStyle.css" rel="stylesheet" />
+
+   
     <script>
         var tbl; //DATA TABLE
         $(document).ready(function () {
             navBarVisability();
             $("#showUsers").on("click", getUsers());
+            //buttonEvents();
         });
 
         function getUsers() {
@@ -34,53 +37,72 @@
             else
                 redrawTable(tbl, usersList);
         }
-         //wire all the buttons to their functions
-        function buttonEvents() {
-            //$(document).on("click", ".editBtn", function () {
-            //    mode = "edit";
-            //    markSelected(this);
-            //    $("#editDiv").show();
-            //    $("#editDiv :input").prop("disabled", false); // edit mode: enable all controls in the form
-            //    populateFields(this.getAttribute('data-carId')); // fill the form fields according to the selected row
-            //});
+        //wire all the buttons to their functions
+        //   function buttonEvents() {
+        //    $(document).on("click", ".editBtn", function () {
+        //        mode = "edit";
+        //        markSelected(this);
+        //        $("#editDiv").show();
+        //        $("#editDiv :input").prop("disabled", false); // edit mode: enable all controls in the form
+        //        populateFields(this.getAttribute('data-carId')); // fill the form fields according to the selected row
+        //    });
 
-            $(document).on("click", ".viewBtn", function () {
-                mode = "view";
-                markSelected(this);
-                $("#editDiv").show();
-                $("#editDiv :input").attr("disabled", "disabled"); // view mode: disable all controls in the form
-                populateFields(this.getAttribute('data-carId'));
-            });
+        //    $(document).on("click", ".viewBtn", function () {
+        //        mode = "view";
+        //        markSelected(this);
+        //        $("#editDiv").show();
+        //        $("#editDiv :input").attr("disabled", "disabled"); // view mode: disable all controls in the form
+        //        populateFields(this.getAttribute('data-carId'));
+        //    });
 
-            $(document).on("click", ".deleteBtn", function () {
-                mode = "delete";
-                markSelected(this);
-                var userId = this.getAttribute('data-userId');
-                swal({ // this will open a dialouge
-                    title: "Are you sure ??",
-                    text: "",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true
-                })
-                    .then(function (willDelete) {
-                        if (willDelete) DeleteUser(userId);
-                        else swal("Not Deleted!");
-                    });
-            });
-        }
+        //    $(document).on("click", ".deleteBtn", function () {
+        //        mode = "delete";
+        //        markSelected(this);
+        //        var userId = this.getAttribute('data-userId');
+        //        swal({ // this will open a dialouge
+        //            title: "Are you sure ??",
+        //            text: "",
+        //            icon: "warning",
+        //            buttons: true,
+        //            dangerMode: true
+        //        })
+        //            .then(function (willDelete) {
+        //                if (willDelete) DeleteUser(userId);
+        //                else swal("Not Deleted!");
+        //            });
+        //    });
+        //}
         // mark the selected row
-        function markSelected(btn) {
-            $("#usersTable tr").removeClass("selected"); // remove seleced class from rows that were selected before
-            row = (btn.parentNode).parentNode; // button is in TD which is in Row
-            row.className = 'selected'; // mark as selected
-        }
+        //function markSelected(btn) {
+        //    $("#usersTable tr").removeClass("selected"); // remove seleced class from rows that were selected before
+        //    row = (btn.parentNode).parentNode; // button is in TD which is in Row
+        //    row.className = 'selected'; // mark as selected
+        //}
 
         // Delete a car from the server
         function DeleteUser(id) {
             ajaxCall("DELETE", "../api/Users/" + id, "", deleteSuccess, error);
         }
-
+        function deleteFunc(id) {
+            var userId = id.getAttribute('data-userId');
+            swal({ // this will open a dialouge
+                title: "Are you sure ??",
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            })
+                .then(function (willDelete) {
+                    if (willDelete) DeleteUser(userId);
+                    else swal("Not Deleted!");
+                });
+        }
+        function deleteSuccess(numOfUser) {
+            alert("Deleted " + numOfUser + " users")
+        }
+        function error(err) {
+            console.log(err)
+        }
         function createTable(usersdata) {
             console.log(usersdata);
             //orders = usersdata;
@@ -95,7 +117,7 @@
                                 let dataProd = "data-userId='" + row.Id + "'";
                                 viewBtn = "<button type='button' id='btnDataTable' class='view btn btn-success' " + dataProd + " > View </button>";
                                 //updateBtn = "<button type='button' class='update btn btn-success' " + dataProd + " > Update </button>";
-                                deleteBtn = "<button type='button' id='btnDataTable' class='delete btn btn-success' " + dataProd + " > Delete </button>";
+                                deleteBtn = "<button type='button' id='btnDataTable' class='delete btn btn-success' onclick='deleteFunc(this)' " + dataProd + " > Delete </button>";
                                 return viewBtn + deleteBtn;
                             }
                         },
