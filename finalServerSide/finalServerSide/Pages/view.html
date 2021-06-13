@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous">
+
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="myStyle.css" rel="stylesheet" />
+
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <!--<script src="../Scripts/navbarFunc.js"></script>-->
+
+    <script>
+        $(document).ready(function () {
+            imagePath = "https://image.tmdb.org/t/p/w500/";
+           navBarVisability();
+
+            $("#phView").html("");
+            str = "<select id='series' onchange=showEpisodes(this)>";
+            str += "<option>select</option>";
+            userId = user.Id;
+            let api = "../api/Totals?UserId=" + userId;
+            ajaxCall("GET", api, "", getSeriesSuccessCB, getSeriesErrorCB);
+        });
+
+    </script>
+
+    <script src="../Scripts/view.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse ">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">The Movie H & H</a>
+            </div>
+            <ul class="nav navbar-nav justify-content-between">
+                <li><a class="toblack" href="insert_signup.html"> Home</a></li>
+                <li><a class="toblack" href="view.html">View</a></li>
+                <li><a class="toblack" id="admin" href="admin.html">Admin</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a onclick="signUpClick()" id="signUp" class="toblack"><span class="glyphicon glyphicon-user singupc"></span> Sign Up</a></li>
+                <li><a id="login" href="login.html" class="toblack"><span class="glyphicon glyphicon-log-in "></span> Login</a></li>
+                <li><a onclick="exitFunc()" id="exit" class="toblack"><span class="glyphicon glyphicon-log-in "></span> Exit</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="title"> My Series</div>
+    <div id="phView"></div>
+    <table id="episodesView"></table>
+</body>
+</html>

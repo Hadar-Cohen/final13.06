@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>DB H&H</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="../scripts/ajaxCalls.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="myStyle.css" rel="stylesheet" />
+
+    <script>
+        var tbl; //DATA TABLE
+        $(document).ready(function () {
+
+            //$("#cancelSaveBTN").on("click", function () {
+            //    car = null;
+            //    $("#editDiv").hide();
+            //    if (mode == "new") $("#pForm").show();
+            //    mode = "";
+            //});
+            navBarVisability();
+            $("#showUsers").on("click", getUsers());
+        });
+
+        function getUsers() {
+            let api = "../api/Users";
+            ajaxCall("GET", api, "", getSuccessCB, error);
+        }
+        function getSuccessCB(usersList) {
+            if (!tbl)
+                createTable(usersList);
+            else
+                redrawTable(tbl, usersList);
+        }
+        // wire all the buttons to their functions
+        //function buttonEvents() {
+        //    $(document).on("click", ".editBtn", function () {
+        //        mode = "edit";
+        //        markSelected(this);
+        //        $("#editDiv").show();
+        //        $("#editDiv :input").prop("disabled", false); // edit mode: enable all controls in the form
+        //        populateFields(this.getAttribute('data-carId')); // fill the form fields according to the selected row
+        //    });
+
+        //    $(document).on("click", ".viewBtn", function () {
+        //        mode = "view";
+        //        markSelected(this);
+        //        $("#editDiv").show();
+        //        $("#editDiv :input").attr("disabled", "disabled"); // view mode: disable all controls in the form
+        //        populateFields(this.getAttribute('data-carId'));
+        //    });
+
+        //    $(document).on("click", ".deleteBtn", function () {
+        //        mode = "delete";
+        //        markSelected(this);
+        //        var carId = this.getAttribute('data-carId');
+        //        swal({ // this will open a dialouge 
+        //            title: "Are you sure ??",
+        //            text: "",
+        //            icon: "warning",
+        //            buttons: true,
+        //            dangerMode: true
+        //        })
+        //            .then(function (willDelete) {
+        //                if (willDelete) DeleteCar(carId);
+        //                else swal("Not Deleted!");
+        //            });
+        //    });
+        //}
+        function createTable(usersdata) {
+            console.log(usersdata);
+            //orders = usersdata;
+            $("#ph").append("<table id='usersTable' class='display nowrap' style='width: 100%'> </table>");
+            try {
+                tbl = $('#usersTable').DataTable({
+
+                    //"createdRow": function (row, data, dataIndex) {
+                    //    if (data.SelfPickup) {
+                    //        $(row).css("background-color", "green");
+                    //    }
+                    //},
+
+                    //"fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    //    if (aData.SelfPickup == true)
+                    //        $('td', nRow).css('background-color', 'Green');
+                    //    else $('td', nRow).css('background-color', 'White');
+                    //},
+                    data: usersdata,
+                    pageLength: 5,
+                    columns: [
+                        //{
+                        //    render: function (data, type, row, meta) {
+                        //        let dataProd = "data-orderId='" + row.Id + "'";
+                        //        viewBtn = "<button type='button' class='view btn btn-success' " + dataProd + " > View </button>";
+                        //        updateBtn = "<button type='button' class='update btn btn-success' " + dataProd + " > Update </button>";
+                        //        deleteBtn = "<button type='button' class='delete btn btn-success' " + dataProd + " > Delete </button>";
+                        //        return viewBtn + updateBtn + deleteBtn;
+                        //    }
+                        //},
+                        {
+                            title: "UserId:",
+                            data: "Id"
+                        },
+                        {
+                            title: "First Name",
+                            data: "FirstName"
+                        },
+                        {
+                            title: "Last Name",
+                            data: "LastName"
+                        },
+                        {
+                            title: "Email",
+                            data: "Email"
+                        },
+                        {
+                            title: "Password",
+                            data: "Password"
+
+                        },
+                        {
+                            title: "PhoneNumber",
+                            data: "PhoneNum"
+
+                        },
+                        {
+                            title: "Gender",
+                            data: "Gender"
+
+                        },
+                        {
+                            title: "Year of birth",
+                            data: "YearOfBirth"
+
+                        },
+                        {
+                            title: "Favorite Genre",
+                            data: "Genre"
+
+                        },
+                        {
+                            title: "Address",
+                            data: "Address"
+                        }
+                    ],
+
+                })
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        function redrawTable(tbl, data) {
+            tbl.clear();
+            for (var i = 0; i < data.length; i++) {
+                tbl.row.add(data[i]);
+            }
+            tbl.draw();
+
+        }
+
+        // this function is activated in case of a failure
+        function error(err) {
+            swal("Error: " + err);
+        }
+    </script>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse ">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">The Movie H & H</a>
+            </div>
+            <ul class="nav navbar-nav justify-content-between">
+                <li><a class="toblack" href="insert_signup.html">Home</a></li>
+                <li><a class="toblack" href="view.html">View</a></li>
+                <li><a class="toblack" id="admin" href="admin.html">Admin</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a onclick="signUpClick()" id="signUp" class="toblack"><span class="glyphicon glyphicon-user singupc"></span> Sign Up</a></li>
+                <li><a id="login" href="login.html" class="toblack"><span class="glyphicon glyphicon-log-in "></span> Login</a></li>
+                <li><a onclick="exitFunc()" id="exit" class="toblack"><span class="glyphicon glyphicon-log-in "></span> Exit</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <button id="showUsers">SHOW ALL USERS</button>
+
+    <div id="ph"></div>
+
+</body>
+</html>
