@@ -1,4 +1,5 @@
-﻿// https://api.themoviedb.org/3/search/tv?api_key=1c107f2bd2f3fc2aee24aa4f2f8d8647&language=en-US&page=1&include_adult=false&query=Grey%27s%20Anatomy
+﻿/// <reference path="navbarfunc.js" />
+// https://api.themoviedb.org/3/search/tv?api_key=1c107f2bd2f3fc2aee24aa4f2f8d8647&language=en-US&page=1&include_adult=false&query=Grey%27s%20Anatomy
 
 $(document).ready(function () {
     $("#getTV").click(getTV);
@@ -17,27 +18,27 @@ $(document).ready(function () {
     navBarVisability();
 });
 
-function navBarVisability() {
-    //localStorage
-    if (localStorage.user != null) {
-        user = JSON.parse(localStorage["user"]);
-        //$("#userName").text("Hello " + user.FirstName + " " + user.LastName);
-        document.getElementById("signUp").style.visibility = "hidden";
-        document.getElementById("login").style.visibility = "hidden";
-        document.getElementById("exit").style.visibility = "visibility";
-        document.getElementById("admin").style.visibility = "hidden";
-        if (user.FirstName == "Administrator") {
-            //document.getElementById("admin").style.visibility = "visibile";
-            $("#admin").prop("visibility", "visible");
-        }
-    }
-    else {
-        document.getElementById("signUp").style.visibility = "visibility";
-        document.getElementById("login").style.visibility = "visibility";
-        document.getElementById("exit").style.visibility = "hidden";
-        document.getElementById("admin").style.visibility = "hidden";
-    }
-}
+//function navBarVisability() {
+//    //localStorage
+//    if (localStorage.user != null) {
+//        user = JSON.parse(localStorage["user"]);
+//        //$("#userName").text("Hello " + user.FirstName + " " + user.LastName);
+//        document.getElementById("signUp").style.visibility = "hidden";
+//        document.getElementById("login").style.visibility = "hidden";
+//        document.getElementById("exit").style.visibility = "visibility";
+//        document.getElementById("admin").style.visibility = "hidden";
+//        if (user.FirstName == "Administrator") {
+//            //document.getElementById("admin").style.visibility = "visibile";
+//            $("#admin").prop("visibility", "visible");
+//        }
+//    }
+//    else {
+//        document.getElementById("signUp").style.visibility = "visibility";
+//        document.getElementById("login").style.visibility = "visibility";
+//        document.getElementById("exit").style.visibility = "hidden";
+//        document.getElementById("admin").style.visibility = "hidden";
+//    }
+//}
 
 //https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key=<<api_key>>&language=en-US
 

@@ -5,7 +5,7 @@
     background-color: #ec4040;
     border: 1px solid #ec4040;
 }
-    .delete:hover {
-        background-color: red;
-        border: 1px solid red;
-    }
+.delete:hover {
+    background-color: red;
+    border: 1px solid red;
+}

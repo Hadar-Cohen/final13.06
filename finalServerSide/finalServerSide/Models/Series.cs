@@ -16,8 +16,9 @@ namespace Ex2.Models
         string overview;
         float popularity;
         string poster_path;
+        int preferencesCount;
 
-        public Series(int id, string first_air_date, string name, string origin_country, string original_language, string overview, float popularity, string poster_path)
+        public Series(int id, string first_air_date, string name, string origin_country, string original_language, string overview, float popularity, string poster_path, int preferencesCount)
         {
             this.id = id;
             this.first_air_date = first_air_date;
@@ -27,6 +28,7 @@ namespace Ex2.Models
             this.overview = overview;
             this.popularity = popularity;
             this.poster_path = poster_path;
+            this.PreferencesCount = preferencesCount + 1;
         }
         public Series()
         { 
@@ -41,7 +43,7 @@ namespace Ex2.Models
         public string Overview { get => overview; set => overview = value; }
         public float Popularity { get => popularity; set => popularity = value; }
         public string Poster_path { get => poster_path; set => poster_path = value; }
-
+        public int PreferencesCount { get => preferencesCount; set => preferencesCount = value; }
 
         public void Insert()
         {

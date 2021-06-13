@@ -20,13 +20,6 @@
     <script>
         var tbl; //DATA TABLE
         $(document).ready(function () {
-
-            //$("#cancelSaveBTN").on("click", function () {
-            //    car = null;
-            //    $("#editDiv").hide();
-            //    if (mode == "new") $("#pForm").show();
-            //    mode = "";
-            //});
             navBarVisability();
             $("#showUsers").on("click", getUsers());
         });
@@ -76,24 +69,13 @@
         //            });
         //    });
         //}
+
         function createTable(usersdata) {
             console.log(usersdata);
             //orders = usersdata;
             $("#ph").append("<table id='usersTable' class='display nowrap' style='width: 100%'> </table>");
             try {
                 tbl = $('#usersTable').DataTable({
-
-                    //"createdRow": function (row, data, dataIndex) {
-                    //    if (data.SelfPickup) {
-                    //        $(row).css("background-color", "green");
-                    //    }
-                    //},
-
-                    //"fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    //    if (aData.SelfPickup == true)
-                    //        $('td', nRow).css('background-color', 'Green');
-                    //    else $('td', nRow).css('background-color', 'White');
-                    //},
                     data: usersdata,
                     pageLength: 5,
                     columns: [
