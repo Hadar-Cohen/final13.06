@@ -24,15 +24,33 @@ namespace Ex2.Models.DAL
             con.Open();
             return con;
         }
+        //---------------------------------------------------------------------------------
+        // Create the SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateCommand(String CommandSTR, SqlConnection con)
+        {
 
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = CommandSTR;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.Text; // the type of the command, can also be stored procedure
+
+            return cmd;
+        }
         //--------------------------------------------------------------------------------------------------
-        // This method inserts a car to the cars table 
+        // This method insert 
         //--------------------------------------------------------------------------------------------------
         public int Insert(Total obj)
         {
             SqlConnection con;
             SqlCommand cmd;
             int numEffected;
+            int columnValue = 0;
 
             try
             {
@@ -43,12 +61,42 @@ namespace Ex2.Models.DAL
                 throw (ex);// write to log
             }
 
+            //insert:
             String cStr = BuildInsertCommand(obj);
             cmd = CreateCommand(cStr, con);
+
             
             try
             {
-                numEffected = cmd.ExecuteNonQuery(); // execute the command
+                numEffected = cmd.ExecuteNonQuery(); // execute the (insert) command
+                //update command: (countPreferSeries)
+                String selectSTRseries = "Select count(distinct userId) as 'countPreferSeries' from Preferences_2021 where seriesId=" + obj.Series.Id;
+                cmd = CreateCommand(selectSTRseries, con);
+
+                // get a reader
+                SqlDataReader dr1 = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                if (dr1.Read())
+                {   // Read till the end of the data into a row
+                    string column = dr1["countPreferSeries"].ToString();
+                    columnValue = Convert.ToInt32(dr1["countPreferSeries"]);
+                }
+                UpdatePreferencesSeriesCount(columnValue, obj.Series.Id);
+
+                ///////////////////////////////////////////////////////////////////////////
+                con = connect("DBConnectionString"); // create the connection
+                //update command: (countPreferEpisodes)
+                String selectSTRepisode = "Select count(distinct userId) as 'countPreferEpisodes' from Preferences_2021 where seriesId=" + obj.Episode.SeriesId +" and episodeId=" +obj.Episode.EpisodeId;
+                cmd = CreateCommand(selectSTRepisode, con);
+
+                // get a reader
+                SqlDataReader dr2 = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                if (dr2.Read())
+                {   // Read till the end of the data into a row
+                    string column = dr2["countPreferEpisodes"].ToString();
+                    columnValue = Convert.ToInt32(dr2["countPreferEpisodes"]);
+                }
+                UpdatePreferencesEpisodesCount(columnValue, obj.Episode.SeriesId, obj.Episode.EpisodeId);
+
                 return numEffected;
             }
             catch (SqlException ex)
@@ -81,6 +129,7 @@ namespace Ex2.Models.DAL
             return command;
         }
 
+
         //---------------------------------------------------------------------------------
         // Read from the DB into a list all the series names that the user prefered- dataReader
         //---------------------------------------------------------------------------------
@@ -96,7 +145,9 @@ namespace Ex2.Models.DAL
                 String selectSTR = "Select distinct S.name From Preferences_2021 as P inner join User_2021 as U on U.id=P.userId ";
                 selectSTR += "inner join Series_2021 as S on P.seriesId= S.id WHERE U.id = " + userId.ToString();
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
+                
 
+                
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
 
@@ -122,23 +173,114 @@ namespace Ex2.Models.DAL
             }
         }
 
-        //---------------------------------------------------------------------------------
-        // Create the SqlCommand
-        //---------------------------------------------------------------------------------
-        private SqlCommand CreateCommand(String CommandSTR, SqlConnection con)
+        
+
+        public void UpdatePreferencesSeriesCount(int preferencesCount, int id)
         {
+            SqlConnection con;
+            SqlCommand cmd;
+            {
+                try
+                {
+                    con = connect("DBConnectionString"); // create the connection
+                }
+                catch (Exception ex)
+                {
+                    // write to log
+                    throw (ex);
+                }
+                String cStr = BuildUpdateSeriesCommand(preferencesCount, id);      // helper method to build the insert string
 
-            SqlCommand cmd = new SqlCommand(); // create the command object
+                cmd = CreateCommand(cStr, con);             // create the command
 
-            cmd.Connection = con;              // assign the connection to the command object
+                try
+                {
+                    int rowEffected = cmd.ExecuteNonQuery(); // execute the command
+                    //return rowEffected;
+                }
+                catch (Exception ex)
+                {
+                    // write to log
+                    throw (ex);
+                }
 
-            cmd.CommandText = CommandSTR;      // can be Select, Insert, Update, Delete 
+                finally
+                {
+                    if (con != null)
+                    {
+                        // close the db connection
+                        con.Close();
+                    }
+                }
+            }
+        }
 
-            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+        public void UpdatePreferencesEpisodesCount(int preferencesCount, int seriesId, int episodeId)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+            {
+                try
+                {
+                    con = connect("DBConnectionString"); // create the connection
+                }
+                catch (Exception ex)
+                {
+                    // write to log
+                    throw (ex);
+                }
+                String cStr = BuildUpdateEpisodeCommand(preferencesCount, seriesId, episodeId);      // helper method to build the insert string
 
-            cmd.CommandType = System.Data.CommandType.Text; // the type of the command, can also be stored procedure
+                cmd = CreateCommand(cStr, con);             // create the command
 
-            return cmd;
+                try
+                {
+                    int rowEffected = cmd.ExecuteNonQuery(); // execute the command
+                    //return rowEffected;
+                }
+                catch (Exception ex)
+                {
+                    // write to log
+                    throw (ex);
+                }
+
+                finally
+                {
+                    if (con != null)
+                    {
+                        // close the db connection
+                        con.Close();
+                    }
+                }
+            }
+        }
+        //--------------------------------------------------------------------
+        // Build the Update command String
+        //--------------------------------------------------------------------
+        private String BuildUpdateSeriesCommand(int preferencesCount, int id)
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat(" SET [preferencesCount]= {0}", preferencesCount);
+            String prefix = "UPDATE Series_2021";
+            String end = "WHERE id= " + id;
+            command = prefix + sb.ToString() + end;
+            return command;
+        }
+
+        private String BuildUpdateEpisodeCommand(int preferencesCount, int seriesId, int episodeId)
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat(" SET [preferencesCount]= {0}", preferencesCount);
+            String prefix = "UPDATE Episode_2021";
+            String end = "WHERE seriesId= " + seriesId + " and episodeId = " + episodeId;
+            command = prefix + sb.ToString() + end;
+            return command;
         }
 
     }

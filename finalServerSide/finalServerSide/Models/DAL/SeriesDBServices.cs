@@ -44,7 +44,7 @@ namespace Ex2.Models.DAL
             SqlConnection con;
             //SqlCommand cmd;
             int numEffected;
-            int preferencesCount = GetPreferencesCount(series.Id);
+            
             try
             {
                 con = connect("DBConnectionString"); // create the connection
@@ -58,7 +58,7 @@ namespace Ex2.Models.DAL
             //cmd = CreateCommand(cStr, con);
 
             String seriesQuery = "INSERT INTO Series_2021 (id,first_air_date,name,origin_country,original_language,overview,popularity,poster_path, preferencesCount) VALUES (@id,@first_air_date,@name,@origin_country,@original_language,@overview,@popularity,@poster_path, @preferencesCount)";
-
+            
             using (SqlCommand command = new SqlCommand(seriesQuery, con))
             {
                 command.Parameters.AddWithValue("@id", series.Id);
@@ -69,7 +69,7 @@ namespace Ex2.Models.DAL
                 command.Parameters.AddWithValue("@overview", series.Overview);
                 command.Parameters.AddWithValue("@popularity", series.Popularity);
                 command.Parameters.AddWithValue("@poster_path", series.Poster_path);
-                command.Parameters.AddWithValue("@preferencesCount", preferencesCount);
+                command.Parameters.AddWithValue("@preferencesCount", series.PreferencesCount);
                 try
                 {
                     numEffected = command.ExecuteNonQuery(); // execute the command
@@ -78,7 +78,11 @@ namespace Ex2.Models.DAL
                 catch (SqlException exe)
                 {
                     if (!(exe.Number == 2627))  //if the row doesnt exists so what is your problem? (throw it)
-                        throw (exe); //so throw what was the problem
+                        throw (exe);//so throw what was the problem
+                    //else
+                    //{
+                    //    int preferencesCount = UpdatePreferencesCount(series.Id);
+                    //}
                     return -1; //the row exists allready
                 }
                 finally
@@ -92,40 +96,94 @@ namespace Ex2.Models.DAL
             }
         }
   
+        //public int UpdatePreferencesCount(int id)
+        //{
+        //    SqlConnection con;
+        //    SqlCommand cmd;
+        //    {
+        //        try
+        //        {
+        //            con = connect("DBConnectionString"); // create the connection
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // write to log
+        //            throw (ex);
+        //        }
+        //        String cStr = BuildUpdateCommand(id);      // helper method to build the insert string
 
-        private int GetPreferencesCount(int seriesId)
-        {
-            SqlConnection con = null;
-            int preferencesCount = 0;
-            try
-            {
-                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+        //        cmd = CreateCommand(cStr, con);             // create the command
 
-                String selectSTR = "SELECT preferencesCount FROM Series_2021 WHERE id=" + seriesId;
-                SqlCommand cmd = new SqlCommand(selectSTR, con);
+        //        try
+        //        {
+        //            int rowEffected = cmd.ExecuteNonQuery(); // execute the command
+        //            return rowEffected;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // write to log
+        //            throw (ex);
+        //        }
 
-                // get a reader
-                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+        //        finally
+        //        {
+        //            if (con != null)
+        //            {
+        //                // close the db connection
+        //                con.Close();
+        //            }
+        //        }
+        //    }
+        //}
 
-                if (dr.Read())
-                {   // Read till the end of the data into a row
-                    preferencesCount = Convert.ToInt32(dr["preferencesCount"]);
-                }
-                return preferencesCount;
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw (ex);
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Close();
-                }
-            }
-        }
+        ////--------------------------------------------------------------------
+        //// Build the Update command String
+        ////--------------------------------------------------------------------
+        //private String BuildUpdateCommand(int id)
+        //{
+        //    String command;
+
+        //    StringBuilder sb = new StringBuilder();
+        //    // use a string builder to create the dynamic string
+        //    sb.AppendFormat(" SET [preferencesCount]=preferencesCount+1 ");
+        //    String prefix = "UPDATE Series_2021";
+        //    String end = "WHERE id= " + id;
+        //    command = prefix + sb.ToString() + end;
+        //    return command;
+        //}
+        //private int GetPreferencesCount(int seriesId)
+        //{
+        //    SqlConnection con = null;
+        //    int preferencesCount = 0;
+        //    try
+        //    {
+        //        con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+        //        String selectSTR = "SELECT preferencesCount FROM Series_2021 WHERE id=" + seriesId;
+        //        SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+        //        // get a reader
+        //        SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+        //        if (dr.Read())
+        //        {   // Read till the end of the data into a row
+        //            preferencesCount = Convert.ToInt32(dr["preferencesCount"]);
+        //        }
+        //        return preferencesCount;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // write to log
+        //        throw (ex);
+        //    }
+        //    finally
+        //    {
+        //        if (con != null)
+        //        {
+        //            con.Close();
+        //        }
+        //    }
+        //}
         //---------------------------------------------------------------------------------
         // Create the SqlCommand
         //---------------------------------------------------------------------------------
