@@ -38,15 +38,15 @@
     border: 2px solid white;
 }
 
-#view, #home_page {
+/*#view, #home_page {
     background-color: #e6ebff;
     color: black;
     border: 2px solid black;
     font-size: 20px;
     top: 60px;
-    left: 8px;
+    left: 8px;*/
     /*margin: 5px;*/
-    width: 70px;
+    /*width: 70px;
     height: 40px;
     transform: translateY(-50%);
     border-radius: 10px;
@@ -58,7 +58,7 @@
     background-color: #1e212d;
     color: white;
     border: 2px solid white;
-}
+}*/
 
 body {
     /*max-width: 1600px;*/
