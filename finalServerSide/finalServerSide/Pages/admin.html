@@ -15,7 +15,8 @@
     <script src="../scripts/ajaxCalls.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="myStyle.css" rel="stylesheet" />
-
+    <script src="../Scripts/navbarFunc.js"></script>
+    <link href="AdminStyle.css" rel="stylesheet" />
     <script>
         var tbl; //DATA TABLE
         $(document).ready(function () {
@@ -62,7 +63,7 @@
         //        mode = "delete";
         //        markSelected(this);
         //        var carId = this.getAttribute('data-carId');
-        //        swal({ // this will open a dialouge 
+        //        swal({ // this will open a dialouge
         //            title: "Are you sure ??",
         //            text: "",
         //            icon: "warning",
@@ -96,15 +97,15 @@
                     data: usersdata,
                     pageLength: 5,
                     columns: [
-                        //{
-                        //    render: function (data, type, row, meta) {
-                        //        let dataProd = "data-orderId='" + row.Id + "'";
-                        //        viewBtn = "<button type='button' class='view btn btn-success' " + dataProd + " > View </button>";
-                        //        updateBtn = "<button type='button' class='update btn btn-success' " + dataProd + " > Update </button>";
-                        //        deleteBtn = "<button type='button' class='delete btn btn-success' " + dataProd + " > Delete </button>";
-                        //        return viewBtn + updateBtn + deleteBtn;
-                        //    }
-                        //},
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataProd = "data-orderId='" + row.Id + "'";
+                                viewBtn = "<button type='button' id='btnDataTable' class='view btn btn-success' " + dataProd + " > View </button>";
+                                //updateBtn = "<button type='button' class='update btn btn-success' " + dataProd + " > Update </button>";
+                                deleteBtn = "<button type='button' id='btnDataTable' class='delete btn btn-success' " + dataProd + " > Delete </button>";
+                                return viewBtn + deleteBtn;
+                            }
+                        },
                         {
                             title: "UserId:",
                             data: "Id"
@@ -174,7 +175,7 @@
         }
     </script>
 </head>
-<body style="background-color:red">
+<body>
 
     <nav class="navbar navbar-inverse ">
         <div class="container-fluid">
