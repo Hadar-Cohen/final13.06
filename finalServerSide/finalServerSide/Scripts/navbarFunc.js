@@ -8,7 +8,8 @@
         document.getElementById("exit").style.visibility = "visibility";
         document.getElementById("admin").style.visibility = "hidden";
         if (user.FirstName == "Administrator") {
-            $("#admin").prop("visibility", "visible");
+            document.getElementById("admin").style.visibility = "visibility";
+            document.getElementById("view").style.visibility = "hidden";
         }
     }
     else {

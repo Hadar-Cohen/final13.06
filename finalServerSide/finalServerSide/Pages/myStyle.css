@@ -368,33 +368,7 @@ hr {
         width: 100%;
     }
 }
-/*#login, #signUp, #exit {
-    background-color: #e6ebff;
-    color: black;
-    font-size: 15px;
-    height: 22px;
-    border-radius: 5px;
-    margin-top: 3px;
-    margin-left: 5px;
-}
 
-#login:hover, #signUp:hover, #exit:hover {
-    background-color: #cb8c5d;
-    color: black;
-    border: 2px solid black;
-}*/
-/*#submitBTN, #exitSignUn {
-    top: 10px;
-    width: 100px;
-    height: 30px;
-    position: relative;
-    background-color: #e6ebff;
-    color: black;
-    transform: translateX(-50%);
-    border-radius: 10px;
-    left: 50%;
-}
-*/
 
 #submitBTN:hover{
     color: rgba(0, 0, 0, 0.8);
@@ -474,9 +448,6 @@ p{
     color: white;
 }
 
-.navbar-nav >ul> li > a#admin {
-    visibility: hidden;
-}
 
 #usersTable, table.dataTable thead th, table.dataTable thead td {
     color: black;
