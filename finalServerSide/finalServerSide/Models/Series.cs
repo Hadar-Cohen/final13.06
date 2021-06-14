@@ -29,6 +29,7 @@ namespace Ex2.Models
             this.popularity = popularity;
             this.poster_path = poster_path;
             this.PreferencesCount = preferencesCount + 1;
+            
         }
         public Series()
         { 

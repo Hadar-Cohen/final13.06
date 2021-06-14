@@ -181,6 +181,11 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="images\1stars.png" />
+    <Content Include="images\2stars.png" />
+    <Content Include="images\3stars.png" />
+    <Content Include="images\4stars.png" />
+    <Content Include="images\5stars.png" />
     <Content Include="Pages\admin.html" />
     <Content Include="Pages\AdminStyle.css" />
     <Content Include="Pages\insert_signup.html" />
