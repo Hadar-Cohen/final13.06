@@ -34,5 +34,10 @@ namespace Ex2.Controllers
         public void Delete(int id)
         {
         }
+        public List<Episode> Get()
+        {
+            Episode s = new Episode();
+            return s.Get();
+        }
     }
 }

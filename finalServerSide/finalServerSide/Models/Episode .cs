@@ -16,6 +16,7 @@ namespace Ex2.Models
         string imageURL;
         string overview;
         string airDate;
+        int preferencesCount;
 
         public int SeriesId { get => seriesId; set => seriesId = value; }
         public string SeriesName { get => seriesName; set => seriesName = value; }
@@ -25,14 +26,14 @@ namespace Ex2.Models
         public string Overview { get => overview; set => overview = value; }
         public string AirDate { get => airDate; set => airDate = value; }
         public int EpisodeId { get => episodeId; set => episodeId = value; }
-        
+        public int PreferencesCount { get => preferencesCount; set => preferencesCount = value; }
 
         public Episode()
         {
 
         }
 
-        public Episode(int episodeId, string seriesName, int seriesId, int seasonNum, string episodeName, string imageURL, string overview, string airDate)
+        public Episode(int episodeId, string seriesName, int seriesId, int seasonNum, string episodeName, string imageURL, string overview, string airDate, int preferencesCount)
         {
             this.episodeId = episodeId;
             this.seriesName = seriesName;
@@ -42,6 +43,7 @@ namespace Ex2.Models
             this.imageURL = imageURL;
             this.overview = overview;
             this.airDate = airDate;
+            this.preferencesCount = preferencesCount;
         }
 
         public int Insert()
@@ -55,6 +57,11 @@ namespace Ex2.Models
             EpisodeDataServices d = new EpisodeDataServices();
             List<Episode> episodeList = d.GetEpisodes(seriesName);
             return episodeList;
+        }
+        public List<Episode> Get()
+        {
+            EpisodeDataServices us = new EpisodeDataServices();
+            return us.GetEpisode();
         }
     }
 }

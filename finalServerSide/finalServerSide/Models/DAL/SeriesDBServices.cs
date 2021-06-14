@@ -229,7 +229,9 @@ namespace Ex2.Models.DAL
                     u.Overview = (string)dr["overview"];
                     u.Popularity = Convert.ToInt32(dr["popularity"]);
                     u.Poster_path = (string)(dr["poster_path"]);
-                    u.PreferencesCount = Convert.ToInt32(dr["preferencesCount"]);
+                    // u.PreferencesCount = Convert.ToInt32(dr["preferencesCount"]);
+                    u.PreferencesCount = dr["preferencesCount"] == DBNull.Value ? 1 : Convert.ToInt32(dr["preferencesCount"]);
+
                     seriesList.Add(u);
                 }
                 return seriesList;

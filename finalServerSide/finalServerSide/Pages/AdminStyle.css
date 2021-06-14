@@ -11,4 +11,8 @@
 }
 #ph, #seriesTableph {
     height: 30%;
+    text-align:center;
+}
+#seriesTable{
+    text-align: center;
 }
