@@ -15,13 +15,13 @@
     <script src="../scripts/ajaxCalls.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="myStyle.css" rel="stylesheet" />
-    <script src="../Scripts/navbarFunc.js"></script>
+    
     <link href="AdminStyle.css" rel="stylesheet" />
-
+    <script src="../Scripts/navbarFunc.js"></script>
    
     <script>
         var tbl; //DATA TABLE
-        $(document).ready(function () {
+        $('document').ready(function () {
             navBarVisability();
             $("#showUsers").on("click", getUsers);
             $("#showSeries").on("click", getSeries);
@@ -29,9 +29,6 @@
 
             //buttonEvents();
         });
-        function reloadPage() {
-            location.reload()
-        }
 
         function getUsers() {
             let api = "../api/Users";
@@ -47,23 +44,10 @@
         }
 
         function getUsersSuccessCB(usersList) {
-<<<<<<< Updated upstream
             createUsersTable(usersList);     
         }
         function getSeriesSuccessCB(seriesList) {
             createSeriesTable(seriesList); 
-=======
-            if (!tbl)
-                createUsersTable(usersList);
-            else
-                redrawTable(tbl, usersList);
-        }
-        function getSeriesSuccessCB(usersList) {
-            if (!tbl)
-                createSeriesTable(usersList);
-            //else
-            //    redrawTable(tbl, usersList);
->>>>>>> Stashed changes
         }
         function getEpisodesSuccessCB(episodesList) {
             createEpisodesTable(episodesList);
@@ -96,15 +80,8 @@
             console.log(err)
         }
         function createUsersTable(usersdata) {
-            document.getElementById("seriesTableph").style.visibility = "hidden";
-            document.getElementById("ph").style.visibility = "visibility";
             console.log(usersdata);
-<<<<<<< Updated upstream
             $("#ph").html("<table id='usersTable' class='display nowrap' style='width: 95%'> </table>");
-=======
-            //orders = usersdata;
-            $("#ph").append("<table id='usersTable' class='display nowrap' style='width: 100%'> </table>");
->>>>>>> Stashed changes
             try {
                 tbl = $('#usersTable').DataTable({
                     data: usersdata,
@@ -174,13 +151,8 @@
         }
         ////////////////////////////////////////////series///////////////////////////////////////////////////
         function createSeriesTable(seriesdata) {
-
             $("#ph").html("<table id='seriesTable' class='display nowrap' style='width: 95%'> </table>");
             console.log(seriesdata);
-         
-            //orders = usersdata;
-            $("#seriesTableph").append("<table id='seriesTable' class='display nowrap' style='width: 100%'> </table>");
-
             try {
                 tbl = $('#seriesTable').DataTable({
                     data: seriesdata,
@@ -303,7 +275,6 @@
                 tbl.row.add(data[i]);
             }
             tbl.draw();
-
         }
 
         // this function is activated in case of a failure
@@ -320,9 +291,10 @@
                 <a class="navbar-brand" href="#">The Movie H & H</a>
             </div>
             <ul class="nav navbar-nav justify-content-between">
-                <li><a class="toblack" href="insert_signup.html">Home</a></li>
-                <li><a class="toblack" href="view.html">View</a></li>
+                <li><a class="toblack" href="insert_signup.html"> Home</a></li>
+                <li><a class="toblack" id="view" href="view.html">View</a></li>
                 <li><a class="toblack" id="admin" href="admin.html">Admin</a></li>
+                <li><div id="userName"></div></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -333,14 +305,12 @@
         </div>
     </nav>
 
-
     <button id="showUsers">SHOW ALL USERS</button>
     <button id="showSeries">SHOW ALL Series</button>
     <button id="showEpisodes">SHOW ALL Episodes</button>
 
-
     <div id="ph"></div>
-    
+    <!--<div id="seriesTableph"></div>-->
 
 </body>
 </html>

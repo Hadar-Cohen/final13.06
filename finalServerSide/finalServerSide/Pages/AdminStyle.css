@@ -25,9 +25,13 @@ td > img {
     text-align: center;
   
 }
-/*#ph {
+#ph {
     padding: 10px;
-}*/
+}
+.paginate_button :hover
+{
+     background-color:aliceblue;
+}
     /*#seriesTable, #episodesTable{
     text-align: center;
 }

@@ -115,8 +115,8 @@ function getSeasonSuccessCB(season) {
     if (season.poster_path == null)
         season.poster_path = posterURL;
     seasonsList += "<div id= '" + i + "' class='card' onclick=showEpisode(this.id)>";
-    seasonsList += "<img src='" + imagePath + season.poster_path + "' style='width:100%'>";
-    seasonsList += "<h4><b>" + season.name + "</b></h4></div>";
+    seasonsList += "<img id= 'imgInCard' src='" + imagePath + season.poster_path + "'style='width:100%'>";
+    seasonsList += "<h4 style='text-align:center'><b>" + season.name + "</b></h4></div>";
     if (i % 5 == 0)
         seasonsList += "</span>";
 
@@ -170,7 +170,7 @@ function getEpisodeSuccessCB(episodes) {
 
     epArr.push(episode);    //מערך של כל הפרקים
     episodesList += "<td class='card2'><img class= 'imgCard' id='" + j + "' src='" + imagePath + episodes.still_path + "'>";
-    episodesList += "<div id='episodeBlock'><br><b>" + episodes.name + "</b></br> " + episodes.air_date + "</br></br><div id='episodeOverView'>" + (episodes.overview) + "</div></div>";
+    episodesList += "<div id='episodeBlock'><br><b id='episodeTitle'>" + episodes.name + "</b></br> " + episodes.air_date + "</br></br><div id='episodeOverView'>" + (episodes.overview) + "</div></div>";
     if (localStorage.user != undefined) {
         episodesList += "</br><button class='addBtn' id='" + c + "' type='button' onclick=PostToServer(epArr[this.id])> Add </button> </center>";
     }

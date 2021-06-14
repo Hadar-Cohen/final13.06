@@ -5,9 +5,10 @@
 
 #ph > img {
     margin-top: 20px;
-    height: 400px;
+    height: 300px;
     display: block;
     margin: 0 auto;
+    border-radius: 10px;
 }
 
 #ph {
@@ -161,7 +162,10 @@ span {
     float: left;
     max-inline-size: 200px;
     background-color: #c0c9ed;
+    height: 250px;
+    width: 170px;
     /*#e6ebff*/
+    /*background: radial-gradient(white, #c0c9ed);*/
 }
 
 .card2 {
@@ -174,7 +178,7 @@ span {
     margin: 5px;
     padding: 20px;
     float: left;
-    max-width: 400px;
+    max-width: 250px;
     height: 360px;
     background-color: #c0c9ed;
 }
@@ -190,6 +194,14 @@ h4{
 card > img {
     border-radius: 5px 5px 0 0;
     height: 200px;
+    /*//*/
+    width: 90% ;
+    display: block;
+    margin: 0 auto;
+    text-align:center;
+}
+#imgInCard {
+    border-radius: 5px;
 }
 
 .imgCard {
@@ -413,9 +425,13 @@ p{
     font-family:Tahoma;
     font-size:16px;
 }
+#episodeTitle {
+    -webkit-line-clamp: 1; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
 
-#episodeBlock{
-    font-family:Tahoma;
+#episodeBlock {
+    font-family: Tahoma;
 }
 
 #home_page {
@@ -455,6 +471,6 @@ p{
 }
 
 #ph>#starsPopularity{
-    height: 80px;
-    width: 500px;
+    height: 41px;
+    width: 250px;
 }
