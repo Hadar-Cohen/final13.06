@@ -9,10 +9,30 @@
     background-color: red;
     border: 1px solid red;
 }
-#ph, #seriesTableph {
+#ph {
     height: 30%;
-    text-align:center;
+    /*text-align:center;*/
 }
-#seriesTable{
+td {
+    border: 1px dashed grey;
+}
+th {
+    /*text-align: center;*/
+}
+td > img {
+    display: block;
+    margin:auto;
+    text-align: center;
+  
+}
+body{
+    padding:10px;
+}
+    /*#seriesTable, #episodesTable{
     text-align: center;
 }
+#seriesTable > td {
+        text-align: center;
+        background-color:red;
+    }
+*/

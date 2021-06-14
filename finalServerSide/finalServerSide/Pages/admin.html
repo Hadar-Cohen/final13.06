@@ -81,7 +81,7 @@
         }
         function createUsersTable(usersdata) {
             console.log(usersdata);
-            $("#ph").html("<table id='usersTable' class='display nowrap' style='width: 100%'> </table>");
+            $("#ph").html("<table id='usersTable' class='display nowrap' style='width: 95%'> </table>");
             try {
                 tbl = $('#usersTable').DataTable({
                     data: usersdata,
@@ -151,7 +151,7 @@
         }
         ////////////////////////////////////////////series///////////////////////////////////////////////////
         function createSeriesTable(seriesdata) {
-            $("#ph").html("<table id='seriesTable' class='display nowrap' style='width: 100%'> </table>");
+            $("#ph").html("<table id='seriesTable' class='display nowrap' style='width: 95%'> </table>");
             console.log(seriesdata);
             try {
                 tbl = $('#seriesTable').DataTable({
@@ -166,7 +166,7 @@
                         {
                             title: "Series image",
                             render: function (data, type, row, meta) {
-                                return "<img class='imgT 'width='50' height='70' src='" + row.Poster_path +"'>";
+                                return "<img class='imgT 'width='70' height='90' src='" + row.Poster_path +"'>";
                                 }
                                 },
                         {
@@ -212,7 +212,7 @@
 
     ////////////////////////////////////////////episode///////////////////////////////////////////////////
         function createEpisodesTable(episodesdata) {
-            $("#ph").html("<table id='episodesTable' class='display nowrap' style='width: 100%'> </table>");
+            $("#ph").html("<table id='episodesTable' class='display nowrap' style='width: 95%'> </table>");
             console.log(episodesdata);
             try {
                 tbl = $('#episodesTable').DataTable({
