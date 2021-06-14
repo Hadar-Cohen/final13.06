@@ -64,6 +64,23 @@ function getTVSuccessCB(tv) {
     posterURL = tv.results[0].poster_path
     let poster = imagePath + posterURL;
     str = "<img src='" + poster + "'/>";
+    let stars = 5;
+    let popularity = tv.results[0].popularity;
+    switch (true) {
+        case (popularity < 40):
+            stars = 1
+            break;
+        case (popularity < 60):
+            stars = 2
+            break;
+        case (popularity < 200):
+            stars = 3
+            break;
+        case (popularity < 400):
+            stars = 4
+            break;
+    }
+    str += "<img id='starsPopularity' src= '../images/" +stars + "stars.png'/>";
     $("#ph").html(str);
 
     let method = "3/tv/";

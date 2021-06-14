@@ -453,3 +453,8 @@ p{
     color: black;
     background-color: #b3c0f2;
 }
+
+#ph>#starsPopularity{
+    height: 80px;
+    width: 500px;
+}
